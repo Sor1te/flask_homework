@@ -1,4 +1,7 @@
 from flask import Flask, url_for, request, render_template
+import json
+from random import choice
+from PIL import Image
 
 app = Flask(__name__)
 
@@ -69,9 +72,6 @@ def form_sample():
 </body>
 </html>
 '''
-
-
-from PIL import Image
 
 
 @app.route('/load_photo', methods=['POST', 'GET'])
@@ -171,6 +171,21 @@ def index(title):
 <!-- Begin page content -->
 </body>
 </html>'''
+
+
+@app.route('/member')
+def staff_shower():
+    with open('templates/staff_members.json', 'rb') as f:
+        data = json.load(f)
+    need_data = choice(data['staff'])
+    full_name = f"{need_data['name']} {need_data['surname']}"
+    path = need_data['photo path']
+    image = Image.open(path)
+    new_image = image.resize((400, 400))
+    new_image.save(path)
+    jobs = ', '.join(sorted(need_data['jobs'].split(', ')))
+    print(full_name, path, jobs, sep='\n')
+    return render_template('members.html', name=full_name, path=path, jobs=jobs)
 
 
 if __name__ == '__main__':

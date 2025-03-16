@@ -1,0 +1,28 @@
+{
+  "staff": [
+    {
+      "name": "Ной",
+      "surname": "Смит",
+      "photo path": "static/img/worker1.png",
+      "jobs": "Инженер-конструктор, Астрогеолог"
+    },
+    {
+      "name": "Лиам",
+      "surname": "Джонсон",
+      "photo path": "static/img/worker2.png",
+      "jobs": "Инженер-строитель, Авиамеханик"
+    },
+    {
+      "name": "Джеймс",
+      "surname": "Браун",
+      "photo path": "static/img/worker3.png",
+      "jobs": "Космический биолог, Специалист по космической медицине"
+    },
+    {
+      "name": "Лео",
+      "surname": "Джонс",
+      "photo path": "static/img/worker4.png",
+      "jobs": "Инженер-баллистик , Метеорологи"
+    }
+  ]
+}

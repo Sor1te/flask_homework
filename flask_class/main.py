@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, url_for, request, render_template
 import json
 from random import choice
@@ -17,9 +19,7 @@ def form_sample():
           href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
           integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
           crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{url_for('static', filename='css/style.css')}<!DOCTYPE html>
-<html lang="en">
-<head>
+    <link rel="stylesheet" type="text/css" href="{url_for('static', filename='css/style.css')}"<!DOCTYPE html>
     <title>Пейзажи Марса</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -186,6 +186,30 @@ def staff_shower():
     jobs = ', '.join(sorted(need_data['jobs'].split(', ')))
     print(full_name, path, jobs, sep='\n')
     return render_template('members.html', name=full_name, path=path, jobs=jobs)
+
+
+@app.route('/', methods=['POST', 'GET'])
+def test():
+    if request.method == 'GET':
+        return render_template('homeworks.html')
+    elif request.method == 'POST':
+        f = request.files['file']
+        name = str(f).split(' ')[1].replace("'", '')
+        new_file = f.read()
+        if new_file:
+            with open(f'static/img_another/{name}', 'wb') as file:
+                file.write(new_file)
+            image = Image.open(f'static/img_another/{name}')
+            new_image = image.resize((320, 320))
+            new_image.save(f'static/img_another/{name}')
+            data = os.listdir(f'static/img_another')
+            info = []
+            info_index = []
+            for i in data:
+                info.append(f'static/img_another/{i}')
+                info_index.append(index(i))
+            return render_template('homeworks.html', photos=info, num_index=info_index
+                                   )
 
 
 if __name__ == '__main__':

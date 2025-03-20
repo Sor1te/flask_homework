@@ -202,7 +202,7 @@ def gallery():
             image = Image.open(f'static/img_another/{name}')
             new_image = image.resize((320, 320))
             new_image.save(f'static/img_another/{name}')
-            data = os.listdir(f'static/img_another')
+            data = os.listdir(f'static/img_another')[:-1]
             info = []
             info_index = []
             for i in data:
@@ -210,6 +210,8 @@ def gallery():
                 info_index.append(index(i))
             return render_template('homeworks.html', photos=info, num_index=info_index
                                    )
+        else:
+            return 'Ошибка запроса'
 
 
 if __name__ == '__main__':

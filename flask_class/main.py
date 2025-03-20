@@ -188,8 +188,8 @@ def staff_shower():
     return render_template('members.html', name=full_name, path=path, jobs=jobs)
 
 
-@app.route('/', methods=['POST', 'GET'])
-def test():
+@app.route('/gallery', methods=['POST', 'GET'])
+def gallery():
     if request.method == 'GET':
         return render_template('homeworks.html')
     elif request.method == 'POST':

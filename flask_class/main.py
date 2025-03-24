@@ -191,7 +191,13 @@ def staff_shower():
 @app.route('/gallery', methods=['POST', 'GET'])
 def gallery():
     if request.method == 'GET':
-        return render_template('homeworks.html')
+        data = os.listdir(f'static/img_another')
+        info = []
+        info_index = []
+        for i in data:
+            info.append(f'static/img_another/{i}')
+            info_index.append(index(i))
+        return render_template('homeworks.html', photos=info, num_index=info_index)
     elif request.method == 'POST':
         f = request.files['file']
         name = str(f).split(' ')[1].replace("'", '')
@@ -202,7 +208,7 @@ def gallery():
             image = Image.open(f'static/img_another/{name}')
             new_image = image.resize((320, 320))
             new_image.save(f'static/img_another/{name}')
-            data = os.listdir(f'static/img_another')[:-1]
+            data = os.listdir(f'static/img_another')
             info = []
             info_index = []
             for i in data:
